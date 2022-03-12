@@ -24,18 +24,21 @@ def save_all_frames(video_path, dir_path, basename, ext='jpg'):
         else:
             return
 
-save_all_frames('sample.mp4', 'result_png', 'sample_video_img', 'png')
+print("動画を画像化中...")
+save_all_frames('sample2.mp4', 'result_png', 'sample_video_img')
 
 ##
 
 path = full_path + "/result_png"
 
 files = os.listdir(path)
-print(files)
+files.remove('.gitignore')
 
 ##
 
 import numpy as np
+
+print("画像を白黒化中...")
 
 for file_name in files:
   # 入力画像を読み込み
@@ -44,7 +47,7 @@ for file_name in files:
   # グレースケール変換
   gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
       
-  # 方法2       
+  # しきい値       
   dst = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
 
       
