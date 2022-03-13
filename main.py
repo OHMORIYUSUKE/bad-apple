@@ -25,7 +25,7 @@ def save_all_frames(video_path, dir_path, basename, ext='jpg'):
             return
 
 print("動画を画像化中...")
-save_all_frames('sample2.mp4', 'result_png', 'sample_video_img')
+save_all_frames('sample.mp4', 'result_png', 'sample_video_img')
 
 ##
 
@@ -48,11 +48,11 @@ for file_name in files:
   gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
       
   # しきい値       
-  dst = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
+  # dst = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
 
       
   # 結果を出力
-  cv2.imwrite(full_path + "/result_png2/" + file_name, dst)
+  cv2.imwrite(full_path + "/result_png2/" + file_name, gray)
 
 
 ##
@@ -60,6 +60,8 @@ for file_name in files:
 from PIL import Image
 import time
 
+print("テキストファイルを書き込み中...")
+n = 0
 for file_name in files:
   # 画像データの読み込み
   img = Image.open(full_path + "/result_png2/" + file_name)
@@ -77,11 +79,28 @@ for file_name in files:
           image_array[y][x] = img.getpixel((x, y))
   # 画像データが数値の配列になっていることが確認できる
   # print(image_array)
+  line_text_t = "┏"
+  line_text_b = "┗"
+  for i in range(width + 1):
+    line_text_b = line_text_b + "━"
+  for i in range(width // 2 - len(file_name)):
+    line_text_t = line_text_t + "━"
+  line_text_t = line_text_t + file_name
+  for i in range(width // 2 + 1):
+    line_text_t = line_text_t + "━"
+  line_text_t = line_text_t + "┓"
+  line_text_b = line_text_b + "┛"
+
+  print(line_text_t)
   for row in range(len(image_array)):
+    print("┃ ", end='')
     for col in range(len(image_array[row])):
-        if image_array[row][col] == 255:
+        if image_array[row][col] >= 125:
           print("#", end='')
         else:
           print(" ", end='') 
+    print("┃", end='')
     print()
+  print(line_text_b)
   os.system('cls')
+  
