@@ -97,44 +97,16 @@ for file_name in files:
   line_text = line_text_t
   line_text = line_text + "\n"
 
-  #print(line_text_t)
   for row in range(len(image_array)):
-    #print("┃ ", end='')
     line_text = line_text + "┃ "
     for col in range(len(image_array[row])):
         if image_array[row][col] >= 125:
-          #print("#", end='')
           line_text = line_text + "#"
         else:
-          #print(" ", end='') 
           line_text = line_text + " "
-    #print("┃", end='')
     line_text = line_text + "┃"
-    #print()
     line_text = line_text + "\n"
-  #print(line_text_b)
   line_text = line_text + line_text_b
-  # print(line_text)
-  os.system('cls')
   f.write(line_text)
   f.close()
   n += 1
-
-
-##
-
-path = full_path + "/result_text"
-files = os.listdir(path)
-files.remove('.gitignore')
-
-for n in range(len(files)):
-  f = open(full_path + "/result_text/" + 'flame_{}.txt'.format(str(n)), 'r', encoding='UTF-8')
-  data = f.read()
-  print(data)
-  #time.sleep(0.001)
-  os.system('cls')
-  f.close()
-
-
-
-  
