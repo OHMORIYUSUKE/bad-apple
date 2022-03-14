@@ -125,6 +125,7 @@ for file_name in files:
 
 path = full_path + "/result_text"
 files = os.listdir(path)
+files.remove('.gitignore')
 
 for n in range(len(files)):
   f = open(full_path + "/result_text/" + 'flame_{}.txt'.format(str(n)), 'r', encoding='UTF-8')
