@@ -63,6 +63,7 @@ import time
 print("テキストファイルを書き込み中...")
 n = 0
 for file_name in files:
+  f = open(full_path + "/result_text/" + 'flame_{}.txt'.format(str(n)), 'w', encoding='UTF-8')
   # 画像データの読み込み
   img = Image.open(full_path + "/result_png2/" + file_name)
   ##
@@ -79,28 +80,60 @@ for file_name in files:
           image_array[y][x] = img.getpixel((x, y))
   # 画像データが数値の配列になっていることが確認できる
   # print(image_array)
+  line_text = ""
+
   line_text_t = "┏"
   line_text_b = "┗"
   for i in range(width + 1):
     line_text_b = line_text_b + "━"
-  for i in range(width // 2 - len(file_name)):
+  for i in range(width // 2 - len('flame_{}'.format(str(n)))):
     line_text_t = line_text_t + "━"
-  line_text_t = line_text_t + file_name
+  line_text_t = line_text_t + 'flame_{}'.format(str(n))
   for i in range(width // 2 + 1):
     line_text_t = line_text_t + "━"
   line_text_t = line_text_t + "┓"
   line_text_b = line_text_b + "┛"
 
-  print(line_text_t)
+  line_text = line_text_t
+  line_text = line_text + "\n"
+
+  #print(line_text_t)
   for row in range(len(image_array)):
-    print("┃ ", end='')
+    #print("┃ ", end='')
+    line_text = line_text + "┃ "
     for col in range(len(image_array[row])):
         if image_array[row][col] >= 125:
-          print("#", end='')
+          #print("#", end='')
+          line_text = line_text + "#"
         else:
-          print(" ", end='') 
-    print("┃", end='')
-    print()
-  print(line_text_b)
+          #print(" ", end='') 
+          line_text = line_text + " "
+    #print("┃", end='')
+    line_text = line_text + "┃"
+    #print()
+    line_text = line_text + "\n"
+  #print(line_text_b)
+  line_text = line_text + line_text_b
+  # print(line_text)
   os.system('cls')
+  f.write(line_text)
+  f.close()
+  n += 1
+
+
+##
+
+path = full_path + "/result_text"
+files = os.listdir(path)
+
+for n in range(len(files)):
+  f = open(full_path + "/result_text/" + 'flame_{}.txt'.format(str(n)), 'r', encoding='UTF-8')
+  data = f.read()
+  print(data)
+  #time.sleep(0.001)
+  os.system('cls')
+  f.close()
+
+
+
   
